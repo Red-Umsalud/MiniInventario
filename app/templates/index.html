@@ -1,11 +1,13 @@
-{% extends 'base.html' %} {% block bodymain%}
+{% extends 'base.html' %}
+
+{% block bodymain%}
 <div class="container">
-  <table class="table">
+  <table id="table" class="table" data-filter-control="true" data-show-search-clear-button="true">
     <thead>
       <tr>
-        <th scope="col">Código</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Ubicación</th>
+        <th data-field="codigo">Código</th>
+        <th data-field="nombre" data-filter-control="input">Nombre</th>
+        <th data-field="ubicacion" data-filter-control="select">Ubicación</th>
       </tr>
     </thead>
     <tbody>
@@ -20,3 +22,10 @@
   </table>
 </div>
 {% endblock bodymain%}
+{% block scripts %}
+<script>
+  $(function() {
+    $('#table').bootstrapTable()
+  })
+</script>
+{% endblock scripts %}
