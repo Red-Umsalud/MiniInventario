@@ -2,7 +2,15 @@
 
 {% block bodymain%}
 <div class="container">
-  <table id="table" class="table" data-filter-control="true" data-show-search-clear-button="true">
+  <div class="form-outline mb-4">
+  <input type="text" class="form-control" id="datatable-search-input" />
+  <label class="form-label" for="datatable-search-input">Search</label>
+</div>
+  <table
+    id="datatable"
+    class="datatable"
+    data-filter-control="true"
+    data-show-search-clear-button="true">
     <thead>
       <tr>
         <th data-field="codigo">Código</th>
@@ -24,8 +32,10 @@
 {% endblock bodymain%}
 {% block scripts %}
 <script>
-  $(function() {
-    $('#table').bootstrapTable()
-  })
+  const instance = new mdb.Datatable(document.getElementById('datatable'), data)
+
+  document.getElementById('datatable-search-input').addEventListener('input', (e) => {
+  instance.search(e.target.value);
+});
 </script>
 {% endblock scripts %}
