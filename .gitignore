@@ -1,4 +1,5 @@
 lenv/
 wenv/
 env/
+.idea/
 *.pyc
