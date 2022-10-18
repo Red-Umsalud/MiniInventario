@@ -1,41 +1,81 @@
 {% extends 'base.html' %}
-
-{% block bodymain%}
-<div class="container">
-  <div class="form-outline mb-4">
-  <input type="text" class="form-control" id="datatable-search-input" />
-  <label class="form-label" for="datatable-search-input">Search</label>
-</div>
-  <table
-    id="datatable"
-    class="datatable"
-    data-filter-control="true"
-    data-show-search-clear-button="true">
-    <thead>
-      <tr>
-        <th data-field="codigo">Código</th>
-        <th data-field="nombre" data-filter-control="input">Nombre</th>
-        <th data-field="ubicacion" data-filter-control="select">Ubicación</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for activo in activos %}
-      <tr>
-        <td>{{ activo.codigo }}</td>
-        <td>{{ activo.nombre }}</td>
-        <td>{{ activo.ubicacion }}</td>
-      </tr>
-      {% endfor%}
-    </tbody>
-  </table>
-</div>
-{% endblock bodymain%}
-{% block scripts %}
-<script>
-  const instance = new mdb.Datatable(document.getElementById('datatable'), data)
-
-  document.getElementById('datatable-search-input').addEventListener('input', (e) => {
-  instance.search(e.target.value);
-});
-</script>
-{% endblock scripts %}
+{% load static %}
+{% block bodymain %}
+    <div class="container">
+        <div class="form-outline mb-4">
+            <input type="text" class="form-control" id="datatable-search-input-ubicacion"/>
+            <label class="form-label" for="datatable-search-input-ubicacion">Buscar por ubicación</label>
+        </div>
+        <div class="form-outline mb-4">
+            <input type="text" class="form-control" id="datatable-search-input-nombre"/>
+            <label class="form-label" for="datatable-search-input-nombre">Buscar por nombre</label>
+        </div>
+        <table
+                id="table"
+                class="table"
+                data-filter-control="true"
+                data-show-search-clear-button="true"
+        >
+            <thead>
+            <tr>
+                <th data-field="codigo">Código</th>
+                <th data-field="nombre" data-filter-control="input">Nombre</th>
+                <th data-field="ubicacion" data-filter-control="select">Ubicación</th>
+            </tr>
+            </thead>
+            <tbody id="table_body">
+            {% for activo in activos %}
+                <tr>
+                    <td>{{ activo.codigo }}</td>
+                    <td>{{ activo.nombre }}</td>
+                    <td>{{ activo.ubicacion }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock bodymain %}
+{% block extrascripts %}
+    <script>
+        function fillTable() {
+            var table_body = $('#table_body');
+            document.getElementById("datatable-search-input-ubicacion").addEventListener("keyup", function (e) {
+                var search_input = $("#datatable-search-input-ubicacion").val();
+                table_body.empty();
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "get_activo_ubicacion_list_api_view" %}',
+                    data: {'ubicacion': search_input},
+                    success: function (data) {
+                        for (let i = 0; i < data.length; i++) {
+                            table_body.append("<tr>" +
+                                "<td>" + data[i]['codigo'] + "</td>" +
+                                "<td>" + data[i]['nombre'] + "</td>" +
+                                "<td>" + data[i]['ubicacion'] + "</td>" +
+                                "</tr>")
+                        }
+                    }
+                })
+            });
+            document.getElementById("datatable-search-input-nombre").addEventListener("keyup", function (e) {
+                var search_input = $("#datatable-search-input-nombre").val();
+                table_body.empty();
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "get_activo_nombre_list_api_view" %}',
+                    data: {'nombre': search_input},
+                    success: function (data) {
+                        for (let i = 0; i < data.length; i++) {
+                            table_body.append("<tr>" +
+                                "<td>" + data[i]['codigo'] + "</td>" +
+                                "<td>" + data[i]['nombre'] + "</td>" +
+                                "<td>" + data[i]['ubicacion'] + "</td>" +
+                                "</tr>")
+                        }
+                    }
+                })
+            });
+        }
+        fillTable();
+    </script>
+{% endblock extrascripts %}
