@@ -17,7 +17,14 @@ def getActivoUbicacionListAPIView(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def getActivonombreListaAPIView(request):
+def getActivoNombreListAPIView(request):
     activos = Activo.objects.filter(nombre__contains=request.GET['nombre'])
     serializer = ActivoSerializer(activos, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def getActivoCodigoListAPIView(request):
+    activos = Activo.objects.filter(codigo__contains=request.GET['codigo'])
+    serializer = ActivoSerializer(activos, many=True)
+    return Response(serializer.data)
+    

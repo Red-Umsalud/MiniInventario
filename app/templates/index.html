@@ -2,14 +2,22 @@
 {% load static %}
 {% block bodymain %}
     <div class="container">
+        <p>
         <div class="form-outline mb-4">
+            <input type="number" class="form-control" id="datatable-search-input-codigo"/>
+            <label class="form-label" for="datatable-search-input-codigo">Buscar por código</label>
+        </div>
+        </p>
+        <p><div class="form-outline mb-4">
             <input type="text" class="form-control" id="datatable-search-input-ubicacion"/>
             <label class="form-label" for="datatable-search-input-ubicacion">Buscar por ubicación</label>
         </div>
-        <div class="form-outline mb-4">
+        </p>
+        <p><div class="form-outline mb-4">
             <input type="text" class="form-control" id="datatable-search-input-nombre"/>
             <label class="form-label" for="datatable-search-input-nombre">Buscar por nombre</label>
         </div>
+        </p>
         <table
                 id="table"
                 class="table"
@@ -18,7 +26,7 @@
         >
             <thead>
             <tr>
-                <th data-field="codigo">Código</th>
+                <th data-field="codigo" data-filter-control="input">Código</th>
                 <th data-field="nombre" data-filter-control="input">Nombre</th>
                 <th data-field="ubicacion" data-filter-control="select">Ubicación</th>
             </tr>
@@ -64,6 +72,24 @@
                     type: 'GET',
                     url: '{% url "get_activo_nombre_list_api_view" %}',
                     data: {'nombre': search_input},
+                    success: function (data) {
+                        for (let i = 0; i < data.length; i++) {
+                            table_body.append("<tr>" +
+                                "<td>" + data[i]['codigo'] + "</td>" +
+                                "<td>" + data[i]['nombre'] + "</td>" +
+                                "<td>" + data[i]['ubicacion'] + "</td>" +
+                                "</tr>")
+                        }
+                    }
+                })
+            });
+            document.getElementById("datatable-search-input-codigo").addEventListener("keyup", function (e) {
+                var search_input = $("#datatable-search-input-codigo").val();
+                table_body.empty();
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "get_activo_codigo_list_api_view" %}',
+                    data: {'codigo': search_input},
                     success: function (data) {
                         for (let i = 0; i < data.length; i++) {
                             table_body.append("<tr>" +
