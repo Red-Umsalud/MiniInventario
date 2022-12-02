@@ -28,3 +28,8 @@ def getActivoCodigoListAPIView(request):
     serializer = ActivoSerializer(activos, many=True)
     return Response(serializer.data)
     
+@api_view(['GET'])
+def getActivoDescripcionListAPIView(request):
+    activos = Activo.objects.filter(descripcion__contains=request.GET(['descripcion']))
+    serializer = ActivoSerializer(activos, many=True)
+    return Response(serializer.data)
