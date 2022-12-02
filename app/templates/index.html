@@ -31,6 +31,7 @@
                 <th data-field="codigo" data-filter-control="input">Código</th>
                 <th data-field="nombre" data-filter-control="input">Nombre</th>
                 <th data-field="ubicacion" data-filter-control="select">Ubicación</th>
+                <th data-field="descripcion" data-filter-control="select">Descripción</th>
                 <th data-field="accion" data-filter-control="select">Acción</th>
             </tr>
         </thead>
@@ -40,6 +41,7 @@
                 <td>{{ activo.codigo }}</td>
                 <td>{{ activo.nombre }}</td>
                 <td>{{ activo.ubicacion }}</td>
+                <td>{{ activo.descripcion }}</td>
                 <td><button class="btn btn-primary"><i class="fa-regular fa-image"></i></button></td>
             </tr>
             {% endfor %}
@@ -64,6 +66,7 @@
                             "<td>" + data[i]['codigo'] + "</td>" +
                             "<td>" + data[i]['nombre'] + "</td>" +
                             "<td>" + data[i]['ubicacion'] + "</td>" +
+                            "<td>" + data[i]['descripcion'] + "</td>" +
                             "</tr>")
                     }
                 }
@@ -82,6 +85,7 @@
                             "<td>" + data[i]['codigo'] + "</td>" +
                             "<td>" + data[i]['nombre'] + "</td>" +
                             "<td>" + data[i]['ubicacion'] + "</td>" +
+                            "<td>" + data[i]['descripcion'] + "</td>" +
                             "</tr>")
                     }
                 }
@@ -100,6 +104,7 @@
                             "<td>" + data[i]['codigo'] + "</td>" +
                             "<td>" + data[i]['nombre'] + "</td>" +
                             "<td>" + data[i]['ubicacion'] + "</td>" +
+                            "<td>" + data[i]['descripcion'] + "</td>" +
                             "</tr>")
                     }
                 }
