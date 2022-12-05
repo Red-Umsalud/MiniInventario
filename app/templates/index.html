@@ -20,6 +20,13 @@
             <label class="form-label" for="datatable-search-input-nombre">Buscar por nombre</label>
         </div>
     </p>
+    <p>
+        <div class="form-outline mb-4">
+            <input type="text" class="form-control" id="datatable-search-input-descripcion"/>
+            <label class="form-label" for="datatable-search-input-descripcion">Buscar por descripcion</label>
+        </div>
+    </p>
+
     <table
         id="table"
         class="table"
@@ -100,6 +107,26 @@
                 type: 'GET',
                 url: '{% url "get_activo_codigo_list_api_view" %}',
                 data: {'codigo': search_input},
+                success: function (data) {
+                    for (let i = 0; i < data.length; i++) {
+                        table_body.append("<tr>" +
+                            "<td>" + data[i]['codigo'] + "</td>" +
+                            "<td>" + data[i]['nombre'] + "</td>" +
+                            "<td>" + data[i]['ubicacion'] + "</td>" +
+                            "<td>" + data[i]['descripcion'] + "</td>" +
+                            '<td><button class="btn btn-primary"><i class="fa-regular fa-image"></i></button></td>' +
+                            "</tr>")
+                    }
+                }
+            })
+        });
+        document.getElementById("datatable-search-input-descripcion").addEventListener("keyup", function (e) {
+            var search_input = $("#datatable-search-input-descripcion").val();
+            table_body.empty();
+            $.ajax({
+                type: 'GET',
+                url: '{% url "get_activo_descripcion_list_api_view" %}',
+                data: {'descripcion': search_input},
                 success: function (data) {
                     for (let i = 0; i < data.length; i++) {
                         table_body.append("<tr>" +
