@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from app.models import Activo
-from .serializers import ActivoSerializer 
+from app.models import Activo, Fotografia
+from .serializers import ActivoSerializer, FotografiaSerializer
 # Create your views here.
 
 @api_view(['GET'])
@@ -32,4 +32,10 @@ def getActivoCodigoListAPIView(request):
 def getActivoDescripcionListAPIView(request):
     activos = Activo.objects.filter(descripcion__contains=request.GET['descripcion'])
     serializer = ActivoSerializer(activos, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getActivoFotografiaListAPIView(request):
+    fotografias = Fotografia.objects.filter(id_activo=request.GET['id_activo'])
+    serializer = FotografiaSerializer(fotografias, many=True)
     return Response(serializer.data)
