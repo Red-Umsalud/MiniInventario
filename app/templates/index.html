@@ -50,7 +50,7 @@
                     <td>{{ activo.descripcion }}</td>
                     <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#photosModal">
+                                data-bs-target="#photosModal" data-id-activo="{{ activo.id_activo }}">
                             <i class="fa-regular fa-image"></i>
                         </button>
                     </td>
@@ -79,7 +79,8 @@
                                 "<td>" + data[i]['nombre'] + "</td>" +
                                 "<td>" + data[i]['ubicacion'] + "</td>" +
                                 "<td>" + data[i]['descripcion'] + "</td>" +
-                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photosModal"><i class="fa-regular fa-image"></i></button></td>' +
+                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photosModal" data-id-activo="' + data[i]['id_activo'] + '">' +
+                                '<i class="fa-regular fa-image"></i></button></td>' +
                                 "</tr>")
                         }
                     }
@@ -99,7 +100,8 @@
                                 "<td>" + data[i]['nombre'] + "</td>" +
                                 "<td>" + data[i]['ubicacion'] + "</td>" +
                                 "<td>" + data[i]['descripcion'] + "</td>" +
-                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photosModal"><i class="fa-regular fa-image"></i></button></td>' +
+                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photosModal" data-id-activo="' + data[i]['id_activo'] + '">' +
+                                '<i class="fa-regular fa-image"></i></button></td>' +
                                 "</tr>")
                         }
                     }
@@ -119,7 +121,8 @@
                                 "<td>" + data[i]['nombre'] + "</td>" +
                                 "<td>" + data[i]['ubicacion'] + "</td>" +
                                 "<td>" + data[i]['descripcion'] + "</td>" +
-                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photosModal"><i class="fa-regular fa-image"></i></button></td>' +
+                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photosModal" data-id-activo="' + data[i]['id_activo'] + '">' +
+                                '<i class="fa-regular fa-image"></i></button></td>' +
                                 "</tr>")
                         }
                     }
@@ -139,14 +142,14 @@
                                 "<td>" + data[i]['nombre'] + "</td>" +
                                 "<td>" + data[i]['ubicacion'] + "</td>" +
                                 "<td>" + data[i]['descripcion'] + "</td>" +
-                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photosModal"><i class="fa-regular fa-image"></i></button></td>' +
+                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photosModal" data-id-activo="' + data[i]['id_activo'] + '">' +
+                                '<i class="fa-regular fa-image"></i></button></td>' +
                                 "</tr>")
                         }
                     }
                 })
             });
         }
-
         fillTable();
     </script>
 {% endblock extrascripts %}
