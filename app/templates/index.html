@@ -50,7 +50,9 @@
                     <td>{{ activo.descripcion }}</td>
                     <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#photosModal" data-id-activo="{{ activo.id_activo }}">
+                                onclick="renovarModal({{ activo.id_activo }})"
+                                data-bs-target="#photosModal" data-id-activo="{{ activo.id_activo }}"
+                                id="button_{{ activo.id_activo }}">
                             <i class="fa-regular fa-image"></i>
                         </button>
                     </td>
@@ -79,7 +81,9 @@
                                 "<td>" + data[i]['nombre'] + "</td>" +
                                 "<td>" + data[i]['ubicacion'] + "</td>" +
                                 "<td>" + data[i]['descripcion'] + "</td>" +
-                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photosModal" data-id-activo="' + data[i]['id_activo'] + '">' +
+                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal"' +
+                                'data-bs-target="#photosModal" onclick="renovarModal(' + data[i]['id_activo'] +
+                                ')" data-id-activo="' + data[i]['id_activo'] + '">' +
                                 '<i class="fa-regular fa-image"></i></button></td>' +
                                 "</tr>")
                         }
@@ -100,7 +104,9 @@
                                 "<td>" + data[i]['nombre'] + "</td>" +
                                 "<td>" + data[i]['ubicacion'] + "</td>" +
                                 "<td>" + data[i]['descripcion'] + "</td>" +
-                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photosModal" data-id-activo="' + data[i]['id_activo'] + '">' +
+                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal"' +
+                                'data-bs-target="#photosModal" onclick="renovarModal(' + data[i]['id_activo'] +
+                                ')" data-id-activo="' + data[i]['id_activo'] + '">' +
                                 '<i class="fa-regular fa-image"></i></button></td>' +
                                 "</tr>")
                         }
@@ -121,7 +127,9 @@
                                 "<td>" + data[i]['nombre'] + "</td>" +
                                 "<td>" + data[i]['ubicacion'] + "</td>" +
                                 "<td>" + data[i]['descripcion'] + "</td>" +
-                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photosModal" data-id-activo="' + data[i]['id_activo'] + '">' +
+                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal"' +
+                                'data-bs-target="#photosModal" onclick="renovarModal(' + data[i]['id_activo'] +
+                                ')" data-id-activo="' + data[i]['id_activo'] + '">' +
                                 '<i class="fa-regular fa-image"></i></button></td>' +
                                 "</tr>")
                         }
@@ -142,7 +150,9 @@
                                 "<td>" + data[i]['nombre'] + "</td>" +
                                 "<td>" + data[i]['ubicacion'] + "</td>" +
                                 "<td>" + data[i]['descripcion'] + "</td>" +
-                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photosModal" data-id-activo="' + data[i]['id_activo'] + '">' +
+                                '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal"' +
+                                'data-bs-target="#photosModal" onclick="renovarModal(' + data[i]['id_activo'] +
+                                ')" data-id-activo="' + data[i]['id_activo'] + '">' +
                                 '<i class="fa-regular fa-image"></i></button></td>' +
                                 "</tr>")
                         }
@@ -150,6 +160,29 @@
                 })
             });
         }
+
         fillTable();
+    </script>
+    <script>
+        function renovarModal(id_activo) {
+            //var modal_content = document.getElementById('contenido_principal_carousel');
+            var modal_content = $('#contenido_principal_carousel');
+            modal_content.empty()
+            $.ajax({
+                type: 'GET',
+                url: '{% url "get_fotografias_id_activo_list_api_view" %}',
+                data: {'id_activo': id_activo},
+                success: function (data) {
+                    modal_content.append('<div class="carousel-item active">' +
+                        '<img src="' + data[0]['fotografia'].slice(4) + '" class="d-block w-100" alt="...">' +
+                        +'</div>')
+                    for (let i = 1; i < data.length; i++) {
+                        modal_content.append('<div class="carousel-item">' +
+                            '<img src="' + data[i]['fotografia'].slice(4) + '" class="d-block w-100" alt="...">' +
+                            +'</div>')
+                    }
+                }
+            })
+        }
     </script>
 {% endblock extrascripts %}
